@@ -1,6 +1,10 @@
 package src;// Asteroids . java Copyright (C) 2019 Ben Sanders
 // TODO make levels that flow , one to the next . have a score and lives !
-
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.sound.sampled.*;
 import java.util.Vector ;
 import java.util.Random;
 import java.time.LocalTime;
@@ -1130,33 +1134,100 @@ public class Asteroids
         myPanel.getActionMap().put(input + " released", new KeyReleased(input));
     }
 
-    public static void main(String[] args) {
-        setup();
-        appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        appFrame.setSize(501, 585);
+//    public static void main(String[] args) {
+//        setup();
+//        appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        appFrame.setSize(501, 585);
+//
+//        JPanel myPanel = new JPanel();
+//
+//        String[] levels = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+//        JComboBox<String> levelMenu = new JComboBox<String>(levels);
+//        levelMenu.setSelectedIndex(2);
+//        levelMenu.addActionListener(new GameLevel());
+//        myPanel.add(levelMenu);
+//        JButton newGameButton = new JButton("New Game");
+//        newGameButton.addActionListener(new StartGame());
+//        myPanel.add(newGameButton);
+//        JButton quitButton = new JButton("Quit Game");
+//        quitButton.addActionListener(new QuitGame());
+//        myPanel.add(quitButton);
+//        bindKey(myPanel, "UP");
+//        bindKey(myPanel, "DOWN");
+//        bindKey(myPanel, "LEFT");
+//        bindKey(myPanel, "RIGHT");
+//        bindKey(myPanel, "F");
+//
+//        appFrame.getContentPane().add(myPanel, "South");
+//        appFrame.setVisible(true);
+//    }
 
-        JPanel myPanel = new JPanel();
 
-        String[] levels = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
-        JComboBox<String> levelMenu = new JComboBox<String>(levels);
-        levelMenu.setSelectedIndex(2);
-        levelMenu.addActionListener(new GameLevel());
-        myPanel.add(levelMenu);
-        JButton newGameButton = new JButton("New Game");
-        newGameButton.addActionListener(new StartGame());
-        myPanel.add(newGameButton);
-        JButton quitButton = new JButton("Quit Game");
-        quitButton.addActionListener(new QuitGame());
-        myPanel.add(quitButton);
-        bindKey(myPanel, "UP");
-        bindKey(myPanel, "DOWN");
-        bindKey(myPanel, "LEFT");
-        bindKey(myPanel, "RIGHT");
-        bindKey(myPanel, "F");
 
-        appFrame.getContentPane().add(myPanel, "South");
-        appFrame.setVisible(true);
+
+    public class YourGameClass {
+        private static JFrame appFrame;
+
+        public static void main(String[] args) {
+            setup();
+            appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            appFrame.setSize(501, 585);
+
+            // Add music
+            playBackgroundMusic();
+
+            JPanel myPanel = new JPanel();
+
+            String[] levels = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+            JComboBox<String> levelMenu = new JComboBox<String>(levels);
+            levelMenu.setSelectedIndex(2);
+            levelMenu.addActionListener(new GameLevel());
+            myPanel.add(levelMenu);
+            JButton newGameButton = new JButton("New Game");
+            newGameButton.addActionListener(new StartGame());
+            myPanel.add(newGameButton);
+            JButton quitButton = new JButton("Quit Game");
+            quitButton.addActionListener(new QuitGame());
+            myPanel.add(quitButton);
+            bindKey(myPanel, "UP");
+            bindKey(myPanel, "DOWN");
+            bindKey(myPanel, "LEFT");
+            bindKey(myPanel, "RIGHT");
+            bindKey(myPanel, "F");
+
+            appFrame.getContentPane().add(myPanel, "South");
+            appFrame.setVisible(true);
+        }
+
+        private static void playBackgroundMusic() {
+            try {
+                // Load the audio file
+                File audioFile = new File("WiiShopMusicLobby.mp3");
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+                // Get a Clip (a data line with controls) from the audio file
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioStream);
+
+                // Start playing the clip in a loop
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+                // Add a listener to stop the music when the game starts
+                JButton newGameButton = new JButton("New Game");
+                newGameButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        clip.stop();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // ... rest of your code ...
     }
+
 
     private static Boolean endgame;
     private static Boolean enemyAlive;
