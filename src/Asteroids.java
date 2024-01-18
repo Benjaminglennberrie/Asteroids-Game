@@ -1,6 +1,5 @@
 package src;// Asteroids . java Copyright (C) 2019 Ben Sanders
 // TODO make levels that flow , one to the next . have a score and lives !
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,7 +7,6 @@ import javax.sound.sampled.*;
 import java.util.Vector ;
 import java.util.Random;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -17,13 +15,8 @@ import javax.swing.KeyStroke;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
 import javax.imageio.ImageIO;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -1165,8 +1158,6 @@ public class Asteroids
 
 
 
-    public class YourGameClass {
-        private static JFrame appFrame;
 
         public static void main(String[] args) {
             setup();
@@ -1202,7 +1193,7 @@ public class Asteroids
         private static void playBackgroundMusic() {
             try {
                 // Load the audio file
-                File audioFile = new File("WiiShopMusicLobby.mp3");
+                File audioFile = new File("WiiShopMusicLobby.wav");
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
                 // Get a Clip (a data line with controls) from the audio file
@@ -1226,7 +1217,7 @@ public class Asteroids
         }
 
         // ... rest of your code ...
-    }
+
 
 
     private static Boolean endgame;
