@@ -21,6 +21,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.*;
+
+
 
 public class Asteroids
 {
@@ -39,13 +44,13 @@ public class Asteroids
         pi = 3.14159265358979;
         twoPi = 2.0 * 3.14159265358979;
         endgame = false;
-        p1width = 25; // 18.5;
+        p1width = 18.5; // 18.5;
         p1height = 25; // 25;
         p1originalX = (double) XOFFSET + ((double) WINWIDTH / 2.0);
         p1originalY = (double) YOFFSET + ((double) WINHEIGHT / 2.0) / 2.0;
         playerBullets = new Vector<ImageObject>();
         playerBulletsTimes = new Vector<Long>();
-        bulletWidth = 5;
+        bulletWidth = 3;
         playerbulletlifetime = 1600L;
         enemybulletlifetime = 1600L;
         explosionlifetime = 800L;
@@ -1127,6 +1132,10 @@ public class Asteroids
         myPanel.getActionMap().put(input + " released", new KeyReleased(input));
     }
 
+
+
+
+
 //    public static void main(String[] args) {
 //        setup();
 //        appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1157,38 +1166,48 @@ public class Asteroids
 
 
 
+    public static void main(String[] args) {
+        setup();
+        appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        appFrame.setSize(700, 400);
 
+        // Add music
+        playBackgroundMusic();
 
-        public static void main(String[] args) {
-            setup();
-            appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            appFrame.setSize(501, 585);
+        JPanel myPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-            // Add music
-            playBackgroundMusic();
+        // Load image and scale it to a larger size
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\theru\\OneDrive\\Desktop\\Courses\\EGR222\\2022.01 Spring\\Asteroids-Game\\titlephoto.jpeg");
+        Image image = imageIcon.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+        ImageIcon scaledImageIcon = new ImageIcon(image);
 
-            JPanel myPanel = new JPanel();
+        JLabel imageLabel = new JLabel(scaledImageIcon);
+        myPanel.add(imageLabel);
 
-            String[] levels = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
-            JComboBox<String> levelMenu = new JComboBox<String>(levels);
-            levelMenu.setSelectedIndex(2);
-            levelMenu.addActionListener(new GameLevel());
-            myPanel.add(levelMenu);
-            JButton newGameButton = new JButton("New Game");
-            newGameButton.addActionListener(new StartGame());
-            myPanel.add(newGameButton);
-            JButton quitButton = new JButton("Quit Game");
-            quitButton.addActionListener(new QuitGame());
-            myPanel.add(quitButton);
-            bindKey(myPanel, "UP");
-            bindKey(myPanel, "DOWN");
-            bindKey(myPanel, "LEFT");
-            bindKey(myPanel, "RIGHT");
-            bindKey(myPanel, "F");
+        String[] levels = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+        JComboBox<String> levelMenu = new JComboBox<>(levels);
+        levelMenu.setSelectedIndex(0);
+        levelMenu.addActionListener(new GameLevel());
+        myPanel.add(levelMenu);
 
-            appFrame.getContentPane().add(myPanel, "South");
-            appFrame.setVisible(true);
-        }
+        JButton newGameButton = new JButton("New Game");
+        newGameButton.addActionListener(new StartGame());
+        myPanel.add(newGameButton);
+
+        JButton quitButton = new JButton("Quit Game");
+        quitButton.addActionListener(new QuitGame());
+        myPanel.add(quitButton);
+
+        bindKey(myPanel, "UP");
+        bindKey(myPanel, "DOWN");
+        bindKey(myPanel, "LEFT");
+        bindKey(myPanel, "RIGHT");
+        bindKey(myPanel, "F");
+
+        appFrame.getContentPane().add(myPanel, BorderLayout.CENTER);
+        appFrame.setVisible(true);
+    }
+
 
         private static void playBackgroundMusic() {
             try {
@@ -1216,7 +1235,6 @@ public class Asteroids
             }
         }
 
-        // ... rest of your code ...
 
 
 
